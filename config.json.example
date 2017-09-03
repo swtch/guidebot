@@ -6,7 +6,8 @@
     "modLogChannel": "mod-log",
     "modRole": "Moderator",
     "adminRole": "Administrator",
-    "welcomeMessage": "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D",
-    "welcomeEnabled": "false"
+    "welcomeEnabled": "false",
+    "welcomeChannel": "welcome",
+    "welcomeMessage": "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D"
   }
 }

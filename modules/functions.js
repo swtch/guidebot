@@ -1,57 +1,6 @@
 module.exports = (client) => {
 
   /*
-  PERMISSION LEVEL FUNCTION
-
-  This is a very basic permission system for commands which uses "levels"
-  "spaces" are intentionally left black so you can add them if you want.
-  NEVER GIVE ANYONE BUT OWNER THE LEVEL 10! By default this can run any
-  command including the VERY DANGEROUS `eval` and `exec` commands!
-
-  */
-  client.permlevel = message => {
-    let permlvl = 0;
-
-    // If bot owner, return max perm level
-    if (message.author.id === client.config.ownerID) return 10;
-
-    // If DMs or webhook, return 0 perm level.
-    if (!message.guild || !message.member) return 0;
-
-    // The rest of the perms rely on roles. If those roles are not found
-    // in the settings, or the user does not have it, their level will be 0
-    try {
-      const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
-      if (modRole && message.member.roles.has(modRole.id)) permlvl = 2;
-    } catch (e) {
-      console.warn("modRole not present in guild settings. Skipping Moderator (level 2) check");
-    }
-    try {
-      const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
-      if (adminRole && message.member.roles.has(adminRole.id)) permlvl = 3;
-    } catch (e) {
-      console.warn("adminRole not present in guild settings. Skipping Administrator (level 3) check");
-    }
-
-    // Guild Owner gets an extra level, wooh!
-    if (message.author.id === message.guild.owner.id) permlvl = 4;
-
-    return permlvl;
-  };
-
-
-  /*
-  LOGGING FUNCTION
-
-  Logs to console. Future patches may include time+colors
-  */
-  client.log = (type, msg, title) => {
-    if (!title) title = "Log";
-    console.log(`[${type}] [${title}]${msg}`);
-  };
-
-
-  /*
   SINGLE-LINE AWAITMESSAGE
 
   A simple way to grab a single reply, from the user that initiated
