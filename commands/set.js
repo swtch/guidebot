@@ -12,43 +12,44 @@ const { inspect } = require("util");
 // const action = args[0]; const key = args[1]; const value = args.slice(2);
 // OR the same as:
 // const [action, key, ...value] = args;
-exports.run = async (client, message, [action, key, ...value], level) => { // eslint-disable-line no-unused-vars
+const command = require(`${process.cwd()}/base/command.js`);
 
-  // Retrieve current guild settings
-  const settings = client.settings.get(message.guild.id);
-
-  // First, if a user does `-set edit <key> <new value>`, let's change it
-  if (action === "edit") {
-    if (!key) return message.reply("Please specify a key to edit");
-    if (!settings[key]) return message.reply("This key does not exist in the settings");
-    if (value.length < 1) return message.reply("Please specify a new value");
-
-    // `value` being an array, we need to join it first.
-    settings[key] = value.join(" ");
-
-    // One the settings is modified, we write it back to the collection
-    client.settings.set(message.guild.id, settings);
-    message.reply(`${key} successfully edited to ${value.join(" ")}`);
-  } else
-  if (action === "get") {
-    if (!key) return message.reply("Please specify a key to view");
-    if (!settings[key]) return message.reply("This key does not exist in the settings");
-    message.reply(`The value of ${key} is currently ${settings[key]}`);
-  } else {
-    message.channel.send(inspect(settings), {code: "json"});
+module.exports = class extends command {
+  constructor(client) {
+    super(client, {
+      name: "set",
+      description: "View or change settings for your server.",
+      category: "System",
+      usage: "set <view/get/edit> <key> <value>",
+      guildOnly: true,
+      aliases: ["setting", "settings", "conf"],
+      permLevel: 3
+    });
   }
-};
 
-exports.conf = {
-  enabled: true,
-  guildOnly: true,
-  aliases: ["setting", "settings", "conf"],
-  permLevel: 3
-};
-
-exports.help = {
-  name: "set",
-  category: "System",
-  description: "View or change settings for your server.",
-  usage: "set <view/get/edit> <key> <value>"
+  async run(message, [action, key, ...value], level) { // eslint-disable-line no-unused-vars
+  // Retrieve current guild settings
+    const settings = this.client.settings.get(message.guild.id);
+  
+    // First, if a user does `-set edit <key> <new value>`, let's change it
+    if (action === "edit") {
+      if (!key) return message.reply("Please specify a key to edit");
+      if (!settings[key]) return message.reply("This key does not exist in the settings");
+      if (value.length < 1) return message.reply("Please specify a new value");
+  
+      // `value` being an array, we need to join it first.
+      settings[key] = value.join(" ");
+  
+      // One the settings is modified, we write it back to the collection
+      this.client.settings.set(message.guild.id, settings);
+      message.reply(`${key} successfully edited to ${value.join(" ")}`);
+    } else
+    if (action === "get") {
+      if (!key) return message.reply("Please specify a key to view");
+      if (!settings[key]) return message.reply("This key does not exist in the settings");
+      message.reply(`The value of ${key} is currently ${settings[key]}`);
+    } else {
+      message.channel.send(inspect(settings), {code: "json"});
+    }
+  }
 };

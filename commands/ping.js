@@ -1,18 +1,21 @@
-exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
-  const msg = await message.channel.send("Ping?");
-  msg.edit(`Pong! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
-};
+const command = require(`${process.cwd()}/base/command.js`);
 
-exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: [],
-  permLevel: 0
-};
+module.exports = class extends command {
+  constructor(client) {
+    super(client, {
+      name: "ping",
+      description: "Latency and API response times.",
+      usage: "ping",
+      aliases: ["pong"]
+    });
+  }
 
-exports.help = {
-  name: "ping",
-  category: "Miscelaneous",
-  description: "It... like... pings. Then Pongs. And it\"s not Ping Pong.",
-  usage: "ping"
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    try {
+      const msg = await message.channel.send("🏓 Ping!");
+      msg.edit(`🏓 Pong! (Roundtrip took: ${msg.createdTimestamp - message.createdTimestamp}ms. 💙: ${Math.round(this.client.ping)}ms.)`);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 };

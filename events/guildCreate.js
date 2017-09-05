@@ -1,6 +1,11 @@
 // This event executes when a new guild (server) is joined.
+module.exports = class {
+  constructor(client) {
+    this.client = client;
+  }
 
-module.exports = (client, guild) => {
-  // We need to add this guild to our settings!
-  client.settings.set(guild.id, client.config.defaultSettings);
+  async run(guild) {
+    // We need to add this guild to our settings!
+    this.client.settings.set(guild.id, this.client.config.defaultSettings);
+  }
 };

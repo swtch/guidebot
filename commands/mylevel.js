@@ -1,17 +1,17 @@
-exports.run = async (client, message, args, level) => {
-  message.reply(`Your permission level is: ${level}`);
-};
+const command = require(`${process.cwd()}/base/command.js`);
 
-exports.conf = {
-  enabled: true,
-  guildOnly: true,
-  aliases: [],
-  permLevel: 0
-};
+module.exports = class extends command {
+  constructor(client) {
+    super(client, {
+      name: "mylevel",
+      description: "Tells you your permission level for the current message location.",
+      category: "Miscelaneous",
+      usage: "mylevel",
+      guildOnly: true
+    });
+  }
 
-exports.help = {
-  name: "mylevel",
-  category: "Miscelaneous",
-  description: "Tells you your permission level for the current message location.",
-  usage: "mylevel"
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    message.reply(`Your permission level is: ${level}`);
+  }
 };

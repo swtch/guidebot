@@ -101,9 +101,9 @@ const init = async () => {
   client.log("log", `Loading a total of ${cmdFiles.length} commands.`);
   cmdFiles.forEach(f => {
     try {
-      const props = require(`./commands/${f}`);
+      const props = new (require(`./commands/${f}`))(client);
       if (f.split(".").slice(-1)[0] !== "js") return;
-      client.log("log", `Loading Command: ${props.help.name}. 👌`);
+      client.log("log", `Loading Command: ${props.help.name}. ✔`);
       client.commands.set(props.help.name, props);
       props.conf.aliases.forEach(alias => {
         client.aliases.set(alias, props.help.name);
@@ -118,9 +118,9 @@ const init = async () => {
   client.log("log", `Loading a total of ${evtFiles.length} events.`);
   evtFiles.forEach(file => {
     const eventName = file.split(".")[0];
-    const event = require(`./events/${file}`);
+    const event = new (require(`./events/${file}`))(client);
     // This line is awesome by the way. Just sayin'.
-    client.on(eventName, event.bind(null, client));
+    client.on(eventName, (...args) => event.run(...args));
     delete require.cache[require.resolve(`./events/${file}`)];
   });
 

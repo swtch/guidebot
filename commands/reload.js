@@ -1,39 +1,38 @@
-exports.run = async (client, message, args, level) => {// eslint-disable-line no-unused-vars
-  if (!args || args.size < 1) return message.reply("Must provide a command to reload. Derp.");
+const command = require(`${process.cwd()}/base/command.js`);
 
-  let command;
-  if (client.commands.has(args[0])) {
-    command = client.commands.get(args[0]);
-  } else if (client.aliases.has(args[0])) {
-    command = client.commands.get(client.aliases.get(args[0]));
+module.exports = class extends command {
+  constructor(client) {
+    super(client, {
+      name: "reload",
+      description: "Reloads a command that has been modified.",
+      usage: "reload [command]",
+      permLevel: 10      
+    });
   }
-  if (!command) return message.reply(`The command \`${args[0]}\` doesn"t seem to exist, nor is it an alias. Try again!`);
-  command = command.help.name;
 
-  delete require.cache[require.resolve(`./${command}.js`)];
-  const cmd = require(`./${command}`);
-  client.commands.delete(command);
-  client.aliases.forEach((cmd, alias) => {
-    if (cmd === command) client.aliases.delete(alias);
-  });
-  client.commands.set(command, cmd);
-  cmd.conf.aliases.forEach(alias => {
-    client.aliases.set(alias, cmd.help.name);
-  });
-
-  message.reply(`The command \`${command}\` has been reloaded`);
-};
-
-exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: [],
-  permLevel: 10
-};
-
-exports.help = {
-  name: "reload",
-  category: "System",
-  description: "Reloads a command that\"s been modified.",
-  usage: "reload [command]"
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (!args || args.size < 1) return message.reply("Must provide a command to reload. Derp.");
+    
+    let command;
+    if (this.client.commands.has(args[0])) {
+      command = this.client.commands.get(args[0]);
+    } else if (this.client.aliases.has(args[0])) {
+      command = this.client.commands.get(this.client.aliases.get(args[0]));
+    }
+    if (!command) return message.reply(`The command \`${args[0]}\` doesn"t seem to exist, nor is it an alias. Try again!`);
+    command = command.help.name;
+    
+    delete require.cache[require.resolve(`./${command}.js`)];
+    const cmd = new (require(`./${command}`))(this.client);
+    this.client.commands.delete(command);
+    this.client.aliases.forEach((cmd, alias) => {
+      if (cmd === command) this.client.aliases.delete(alias);
+    });
+    this.client.commands.set(command, cmd);
+    cmd.conf.aliases.forEach(alias => {
+      this.client.aliases.set(alias, cmd.help.name);
+    });
+    
+    message.reply(`The command \`${command}\` has been reloaded`);
+  }
 };
