@@ -8,7 +8,7 @@ module.exports = class {
   }
 
   async run(message) {
-    
+
     // It's good practice to ignore other bots. This also makes your bot ignore itself
     //  and not get into a spam loop (we call that "botception").
     if (message.author.bot) return;
@@ -16,8 +16,8 @@ module.exports = class {
     // Grab the settings for this server from the PersistentCollection
     // If there is no guild, get default conf (DMs)
     const settings = message.guild
-    ? this.client.settings.get(message.guild.id)
-    : this.client.config.defaultSettings;
+      ? this.client.settings.get(message.guild.id)
+      : this.client.config.defaultSettings;
 
     // For ease of use in commands and functions, we'll attach the settings
     // to the message object, so `message.settings` is accessible.
