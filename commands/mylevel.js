@@ -11,7 +11,7 @@ class MyLevel extends Command {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {
     message.reply(`Your permission level is: ${level}`);
   }
 }

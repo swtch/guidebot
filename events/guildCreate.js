@@ -6,7 +6,7 @@ module.exports = class {
   }
 
   async run(guild) {
-    
+
     // We need to add this guild to our settings!
     this.client.settings.set(guild.id, this.client.config.defaultSettings);
   }

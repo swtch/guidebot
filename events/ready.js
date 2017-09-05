@@ -12,7 +12,7 @@ module.exports = class {
 
     // `log` is located in `./index`, whilst `wait` is located in `./modules/functions`
     this.client.log("log", `Ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`, "Ready!");
-    
+
     // We check for any guilds added while the bot was offline, if any were, they get a default configuration.
     this.client.guilds.filter(g => !this.client.settings.has(g.id)).forEach(g => this.client.settings.set(g.id, this.client.config.defaultSettings));
   }

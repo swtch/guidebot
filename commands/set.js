@@ -30,16 +30,16 @@ class Set extends Command {
   async run(message, [action, key, ...value], level) { // eslint-disable-line no-unused-vars
   // Retrieve current guild settings
     const settings = this.client.settings.get(message.guild.id);
-  
+
     // First, if a user does `-set edit <key> <new value>`, let's change it
     if (action === "edit") {
       if (!key) return message.reply("Please specify a key to edit");
       if (!settings[key]) return message.reply("This key does not exist in the settings");
       if (value.length < 1) return message.reply("Please specify a new value");
-  
+
       // `value` being an array, we need to join it first.
       settings[key] = value.join(" ");
-  
+
       // One the settings is modified, we write it back to the collection
       this.client.settings.set(message.guild.id, settings);
       message.reply(`${key} successfully edited to ${value.join(" ")}`);
