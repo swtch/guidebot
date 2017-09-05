@@ -5,7 +5,8 @@ module.exports = class {
     this.client = client;
   }
 
-  async execute(member) {
+  async run(member) {
+
     // Load the guild's settings
     const settings = this.client.settings.get(member.guild.id);
   
