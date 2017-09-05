@@ -1,4 +1,4 @@
-class BaseCommand {
+class Command {
   constructor(client, {
     name = null, 
     description = "No description provided.", 
@@ -14,4 +14,4 @@ class BaseCommand {
     this.help = { name, description, category, usage };
   }
 }
-module.exports = BaseCommand;
+module.exports = Command;

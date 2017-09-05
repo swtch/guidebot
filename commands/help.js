@@ -1,6 +1,6 @@
-const command = require(`${process.cwd()}/base/command.js`);
+const Command = require("../base/Command.js");
 
-module.exports = class extends command {
+class Help extends Command {
   constructor(client) {
     super(client, {
       name: "help",
@@ -38,4 +38,6 @@ module.exports = class extends command {
       }
     }
   }
-};
+}
+
+module.exports = Help;

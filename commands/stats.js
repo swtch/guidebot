@@ -1,9 +1,9 @@
-const command = require(`${process.cwd()}/base/command.js`);
+const Command = require("../base/Command.js");
 const { version } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");
 
-module.exports = class extends command {
+class Stats extends Command {
   constructor(client) {
     super(client, {
       name: "stats",
@@ -24,4 +24,6 @@ module.exports = class extends command {
   • Discord.js :: v${version}
   • Node       :: ${process.version}`, {code: "asciidoc"});
   }
-};
+}
+
+module.exports = Stats;

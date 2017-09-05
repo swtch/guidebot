@@ -1,6 +1,6 @@
-const command = require(`${process.cwd()}/base/command.js`);
+const Command = require("../base/Command.js");
 
-module.exports = class extends command {
+class Reload extends Command {
   constructor(client) {
     super(client, {
       name: "reload",
@@ -35,4 +35,5 @@ module.exports = class extends command {
     
     message.reply(`The command \`${command}\` has been reloaded`);
   }
-};
+}
+module.exports = Reload;

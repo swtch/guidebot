@@ -1,6 +1,6 @@
-const command = require(`${process.cwd()}/base/command.js`);
+const Command = require("../base/Command.js");
 
-module.exports = class extends command {
+class MyLevel extends Command {
   constructor(client) {
     super(client, {
       name: "mylevel",
@@ -14,4 +14,6 @@ module.exports = class extends command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     message.reply(`Your permission level is: ${level}`);
   }
-};
+}
+
+module.exports = MyLevel;

@@ -6,9 +6,9 @@
 
 // However it's, like, super ultra useful for troubleshooting and doing stuff
 // you don't want to put in a command.
-const command = require(`${process.cwd()}/base/command.js`);
+const Command = require("../base/Command.js");
 
-module.exports = class extends command {
+class Eval extends Command {
   constructor(client) {
     super(client, {
       name: "eval",
@@ -30,4 +30,6 @@ module.exports = class extends command {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${await this.client.clean(this.client, err)}\n\`\`\``);
     }
   }
-};
+}
+
+module.exports = Eval;

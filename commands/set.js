@@ -12,9 +12,9 @@ const { inspect } = require("util");
 // const action = args[0]; const key = args[1]; const value = args.slice(2);
 // OR the same as:
 // const [action, key, ...value] = args;
-const command = require(`${process.cwd()}/base/command.js`);
+const Command = require("../base/Command.js");
 
-module.exports = class extends command {
+class Set extends Command {
   constructor(client) {
     super(client, {
       name: "set",
@@ -52,4 +52,6 @@ module.exports = class extends command {
       message.channel.send(inspect(settings), {code: "json"});
     }
   }
-};
+}
+
+module.exports = Set;
