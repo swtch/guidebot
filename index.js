@@ -16,7 +16,6 @@ class GuideBot extends Discord.Client {
 
     // Here we load the config.js file that contains our token and our prefix values.
     this.config = require("./config.js");
-    console.log(this.client.config.permLevels.map(p=>`${p.level} : ${p.name}`));
     // client.config.token contains the bot's token
     // client.config.prefix contains the message prefix
 
@@ -71,6 +70,7 @@ class GuideBot extends Discord.Client {
 // some might call it `cootchie`. Either way, when you see `client.something`,
 // or `bot.something`, this is what we're refering to. Your client.
 const client = new GuideBot();
+console.log(client.config.permLevels.map(p=>`${p.level} : ${p.name}`));
 
 // Let's start by getting some useful functions that we'll use throughout
 // the bot, like logs and elevation features.

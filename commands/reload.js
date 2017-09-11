@@ -6,7 +6,7 @@ class Reload extends Command {
       name: "reload",
       description: "Reloads a command that has been modified.",
       usage: "reload [command]",
-      permLevel: 10
+      permLevel: "Bot Owner"
     });
   }
 

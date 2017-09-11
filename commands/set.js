@@ -23,7 +23,7 @@ class Set extends Command {
       usage: "set <view/get/edit> <key> <value>",
       guildOnly: true,
       aliases: ["setting", "settings", "conf"],
-      permLevel: 3
+      permLevel: "Administrator"
     });
   }
 

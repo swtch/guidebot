@@ -14,7 +14,7 @@ class Help extends Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (!args[0]) {
       const settings = message.guild ? this.client.settings.get(message.guild.id) : this.client.config.defaultSettings;
-      const myCommands = message.guild ? this.client.commands.filter(cmd => cmd.conf.permLevel <= level) : this.client.commands.filter(cmd => cmd.conf.permLevel <= level &&  cmd.conf.guildOnly !== true);
+      const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level) : this.client.commands.filter(cmd => cmd.conf.permLevel <= level &&  cmd.conf.guildOnly !== true);
       const commandNames = myCommands.keyArray();
       const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
       let currentCategory = "";
@@ -33,7 +33,7 @@ class Help extends Command {
       let command = args[0];
       if (this.client.commands.has(command)) {
         command = this.client.commands.get(command);
-        if (level < command.conf.permLevel) return;
+        if (level < this.client.levelCache[command.conf.permLevel]) return;
         message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nalises:: ${command.conf.aliases.join(", ")}`, {code:"asciidoc"});
       }
     }

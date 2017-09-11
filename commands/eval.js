@@ -16,7 +16,7 @@ class Eval extends Command {
       category:"System",
       usage: "eval <expression>",
       aliases: ["ev"],
-      permLevel: 10
+      permLevel: "Bot Owner"
     });
   }
 
