@@ -14,8 +14,9 @@ class GuideBot extends Discord.Client {
   constructor(options) {
     super(options);
 
-    // Here we load the config.json file that contains our token and our prefix values.
-    this.config = require("./config.json");
+    // Here we load the config.js file that contains our token and our prefix values.
+    this.config = require("./config.js");
+    console.log(this.client.config.permLevels.map(p=>`${p.level} : ${p.name}`));
     // client.config.token contains the bot's token
     // client.config.prefix contains the message prefix
 
@@ -42,30 +43,15 @@ class GuideBot extends Discord.Client {
   permlevel(message) {
     let permlvl = 0;
 
-    // If bot owner, return max perm level
-    if (message.author.id === client.config.ownerID) return 10;
+    const permOrder = client.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1);
 
-    // If DMs or webhook, return 0 perm level.
-    if (!message.guild || !message.member) return 0;
-
-    // The rest of the perms rely on roles. If those roles are not found
-    // in the settings, or the user does not have it, their level will be 0
-    try {
-      const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
-      if (modRole && message.member.roles.has(modRole.id)) permlvl = 2;
-    } catch (e) {
-      console.warn("modRole not present in guild settings. Skipping Moderator (level 2) check");
+    while (permOrder.length) {
+      const currentLevel = permOrder.shift();
+      if (currentLevel.check(message)) {
+        permlvl = currentLevel.level;
+        break;
+      }
     }
-    try {
-      const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
-      if (adminRole && message.member.roles.has(adminRole.id)) permlvl = 3;
-    } catch (e) {
-      console.warn("adminRole not present in guild settings. Skipping Administrator (level 3) check");
-    }
-
-    // Guild Owner gets an extra level, wooh!
-    if (message.author.id === message.guild.owner.id) permlvl = 4;
-
     return permlvl;
   }
 
@@ -123,6 +109,12 @@ const init = async () => {
     client.on(eventName, (...args) => event.run(...args));
     delete require.cache[require.resolve(`./events/${file}`)];
   });
+
+  client.levelCache = {};
+  for (let i = 0; i < client.config.permLevels.length; i++) {
+    const thisLevel = client.config.permLevels[i];
+    client.levelCache[thisLevel.name] = thisLevel.level;
+  }
 
   // Here we login the client.
   client.login(client.config.token);
