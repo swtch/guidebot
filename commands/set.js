@@ -30,7 +30,7 @@ class Set extends Command {
   async run(message, [action, key, ...value], level) { // eslint-disable-line no-unused-vars
 
     // Retrieve current guild settings
-    const settings = client.settings.get(message.guild.id);
+    const settings = this.client.settings.get(message.guild.id);
   
     // First, if a user does `-set add <key> <new value>`, let's add it
     if (action === "add") {
