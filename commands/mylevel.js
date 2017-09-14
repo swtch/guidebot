@@ -5,7 +5,6 @@ class MyLevel extends Command {
     super(client, {
       name: "mylevel",
       description: "Tells you your permission level for the current message location.",
-      category: "Miscelaneous",
       usage: "mylevel",
       guildOnly: true
     });
