@@ -22,7 +22,7 @@ class Reboot extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      await message.reply(`Bot is shutting down. ${hasPM2}`);
+      await message.reply("Bot is shutting down.");
       process.exit(1);
     } catch (e) {
       console.log(e);

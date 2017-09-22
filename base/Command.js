@@ -2,7 +2,7 @@ class Command {
   constructor(client, {
     name = null,
     description = "No description provided.",
-    category = "Miscelaneous",
+    category = "Miscellaneous",
     usage = "No usage provided.",
     enabled = true,
     guildOnly = false,
