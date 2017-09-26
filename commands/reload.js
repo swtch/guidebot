@@ -29,7 +29,7 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
     soundFiles.forEach(async (mp3) =>  {
       const soundName = mp3.split(".")[0].toLowerCase();
       //if (!client.soundsUse[soundName] || (client.soundsUse[soundName] <= 0)) {client.soundsUse.set(soundName, 0 );}
-      newSounds.set(soundName,  {"name" : soundName, "description" : mp3.split(".")[1], path: `./media/sb/${mp3}` });
+      newSounds.set(soundName,  {"name" : soundName, "description" : mp3.split(".")[1], "path": `./media/sb/${mp3}` });
     });
     const difference = diff(client.sounds, newSounds);
     let plu = ["",""];

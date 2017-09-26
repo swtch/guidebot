@@ -25,7 +25,12 @@ client.settings = new Enmap({ name: "settings", persistent: true });
 // Sound Collection
 client.sounds = new Enmap();
 //client.soundsUse = new Enmap({ name: "soundsUse", persistent: true });
-
+var http = require('http');
+var server = http.createServer(function(req, res) {
+  res.writeHead(200);
+  res.end('Salut tout le monde !');
+});
+server.listen(8080);
 
 
 
@@ -62,7 +67,7 @@ const init = async () => {
   soundFiles.forEach(mp3 => {
     const soundName = mp3.split(".")[0];
     //if (!client.soundsUse[soundName] || (client.soundsUse[soundName] <= 0)) {client.soundsUse.set(soundName, 0 );}
-    client.sounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[1], path: `./media/sb/${mp3}` });
+    client.sounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[2], "path": `./media/sb/${mp3}`,"category":mp3.split(".")[1] });
   });
 
   // Generate a cache of client permissions

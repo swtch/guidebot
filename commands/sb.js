@@ -15,9 +15,27 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   if (query==="list") {
     const longest = client.sounds.keyArray().reduce((long, str) => Math.max(long, str.length), 0); 
     let reply = `= Liste des Sons =\n\n[  ${settings.prefix}sb <Nom du son>  ]\n\n`;
-    client.sounds.forEach(s =>{
-      reply += `\n ${s.name}${" ".repeat(longest - s.name.length)}  ::  ${s.description}`; 
-    });
+
+    let currentCategory = "";
+    const sorted = client.sounds.sort((p, c) => p.category > c.category ? 1 : p.name > c.name && p.category === c.category ? 1 : -1);
+    sorted.forEach(c => {
+      const cat = c.category.toProperCase();
+      if (currentCategory !== cat) {
+        reply += `\n\n=== ${cat}`;
+        currentCategory = cat;
+      }
+      reply += `    \n ${c.name}${" ".repeat(longest - c.name.length)}::  ${c.description}`;});
+   
+    /*let currentCategory = "";
+    const sorted = client.sounds.sort((p, c) => p.category > c.category ? 1 : p.name > c.name && p.category === c.category ? 1 : -1);
+    sorted.forEach(c => {
+      const cat = c.category.toProperCase();
+      if (currentCategory !== cat) {
+        reply += `\n\n${cat}\n`;
+        currentCategory = cat;
+      }
+      reply += `${c.name.toProperCase()},  `;});*/
+
     message.reply("Go en MP poulet.");
     message.author.createDM()
       .then(function(channel) { channel.send(reply, { code: "asciidoc", split : true }); });
