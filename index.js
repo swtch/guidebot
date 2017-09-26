@@ -25,12 +25,7 @@ client.settings = new Enmap({ name: "settings", persistent: true });
 // Sound Collection
 client.sounds = new Enmap();
 //client.soundsUse = new Enmap({ name: "soundsUse", persistent: true });
-var http = require('http');
-var server = http.createServer(function(req, res) {
-  res.writeHead(200);
-  res.end('Salut tout le monde !');
-});
-server.listen(8080);
+
 
 
 
