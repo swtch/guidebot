@@ -1,70 +1,50 @@
 const { inspect } = require("util");
-
-// This command is to modify/edit guild configuration. Perm Level 3 for admins
-// and owners only. Used for changing prefixes and role names and such.
-
-// Note that there's no "checks" in this basic version - no config "types" like
-// Role, String, Int, etc... It's basic, to be extended with your deft hands!
-
-// Note the **destructuring** here. instead of `args` we have :
-// [action, key, ...value]
-// This gives us the equivalent of either:
-// const action = args[0]; const key = args[1]; const value = args.slice(2);
-// OR the same as:
-// const [action, key, ...value] = args;
 exports.run = async (client, message, [action, key, ...value], level) => { // eslint-disable-line no-unused-vars
 
-  // Retrieve current guild settings
+
   const settings = client.settings.get(message.guild.id);
   
-  // First, if a user does `-set add <key> <new value>`, let's add it
+
   if (action === "add") {
-    if (!key) return message.reply("Please specify a key to add");
-    if (settings[key]) return message.reply("This key already exists in the settings");
-    if (value.length < 1) return message.reply("Please specify a value");
-
-    // `value` being an array, we need to join it first.
+    if (!key) return message.reply("Merci de préciser la \"key\" à ajouter");
+    if (settings[key]) return message.reply("Cette \"key\" existe déja");
+    if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
     settings[key] = value.join(" ");
-  
-    // One the settings is modified, we write it back to the collection
-    this.client.settings.set(message.guild.id, settings);
-    message.reply(`${key} successfully added with the value of ${value.join(" ")}`);
+    client.settings.set(message.guild.id, settings);
+    message.reply(`${key} à até ajouté avec comme valeur: ${value.join(" ")}`);
   } else
-  
-  // Secondly, if a user does `-set edit <key> <new value>`, let's change it
   if (action === "edit") {
-    if (!key) return message.reply("Please specify a key to edit");
-    if (!settings[key]) return message.reply("This key does not exist in the settings");
-    if (value.length < 1) return message.reply("Please specify a new value");
-  
+    if (!key) return message.reply("Merci de préciser la \"key\" à editer");
+    if (key === "game" & value.length >= 1) {
+      client.user.setPresence({ status: "online", game: { name: value.join(" "), type: 0 } }).catch(console.error);
+      return message.reply(`"Playing Game" à até modifié avec comme valeur: \`${value.join(" ")}\``);}
+    if (key === "avatar" & value.length >= 1) { client.user.setAvatar(value.toString())
+      .then(message.channel.send("Avatar mis à jour avec grand succés"))
+      .catch(error => {client.log("err", error, "CMD" ); message.reply("C'est bien un liens vers une image?");});
+    return; }
+    if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
+    if (!settings[key]) return message.reply("Cette \"key\" n'existe pas");
     settings[key] = value.join(" ");
-
-    this.client.settings.set(message.guild.id, settings);
-    message.reply(`${key} successfully edited to ${value.join(" ")}`);
+    client.settings.set(message.guild.id, settings);
+    message.reply(`${key} à até modifié avec comme valeur: ${value.join(" ")}`);
   } else
   
-  // Thirdly, if a user does `-set del <key>`, let's ask the user if they're sure...
+
   if (action === "del") {
-    if (!key) return message.reply("Please specify a key to delete.");
-    if (!settings[key]) return message.reply("This key does not exist in the settings");
-    
-    // Throw the 'are you sure?' text at them.
-    const response = await this.client.awaitReply(message, `Are you sure you want to permanently delete ${key}? This **CANNOT** be undone.`);
-
-    // If they respond with y or yes, continue.
-    if (["y", "yes"].includes(response)) {
-
-      // We delete the `key` here.
+    if (!key) return message.reply("Merci de préciser la \"key\" à supprimer");
+    if (!settings[key]) return message.reply("Cette \"key\" n'existe pas");
+    const response = await client.awaitReply(message, `Etes vous sur de vouloir supprimer ${key}?`);
+    if (["o", "oui", "ouais"].includes(response)) {
       delete settings[key];
       this.client.settings.set(message.guild.id, settings);
-      message.reply(`${key} was successfully deleted.`);
+      message.reply(`${key} à bien été supprimer.`);
     } else
-    // If they respond with n or no, we inform them that the action has been cancelled.
-    if (["n","no","cancel"].includes(response)) {
-      message.reply("Action cancelled.");
+    if (["n","no","non"].includes(response)) {
+      message.reply("Action annulé.");
     }
   } else
   
+
   if (action === "get") {
     if (!key) return message.reply("Please specify a key to view");
     if (!settings[key]) return message.reply("This key does not exist in the settings");
@@ -78,12 +58,12 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ["setting", "settings", "conf"],
-  permLevel: "Administrator"
+  permLevel: "Papa"
 };
 
 exports.help = {
   name: "set",
-  category: "System",
-  description: "View or change settings for your server.",
-  usage: "set <view/get/edit> <key> <value>"
+  category: "Systeme",
+  description: "Voir/editer la conf du bot",
+  usage: "set <view/get/edit> <paramétre> <valeur>"
 };

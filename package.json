@@ -1,25 +1,29 @@
 {
-  "name": "guidebot",
-  "version": "2.0.3",
-  "description": "A boilerplate example bot with command handler and reloadable commands. Updated and Maintained by the Idiot's Guide Community",
+  "name": "hutbot",
+  "version": "2.1.0",
+  "description": "Discord Bot for the hut community, based from the boilerplate example bot by The Idiot's Guide Community",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eslachance/discordjs-command-handler.git"
+    "url": "git+https://github.com/swtch/hutbot"
   },
-  "author": "The Idiot's Guide Community",
-  "license": "MIT",
+  "author": "Swtch / The Idiot's Guide Community",
+  "license": "",
   "bugs": {
-    "url": "https://github.com/eslachance/discordjs-command-handler/issues"
+    "url": "https://github.com/swtch/hutbot"
   },
-  "homepage": "https://github.com/eslachance/discordjs-command-handler#readme",
+  "homepage": "https://github.com/swtch/hutbot",
   "dependencies": {
     "discord.js": "^11.2.1",
     "enmap": "0.0.4",
+    "ffmpeg-binaries": "^3.2.2-3",
     "moment": "^2.18.1",
-    "moment-duration-format": "^1.3.0"
+    "moment-duration-format": "^1.3.0",
+    "node-opus": "^0.2.7",
+    "pubg-api-redis": "^3.6.0",
+    "ytdl-core": "^0.17.1"
   }
 }

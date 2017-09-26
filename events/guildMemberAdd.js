@@ -1,16 +1,12 @@
-// This event executes when a new member joins a server. Let's welcome them!
+
 
 module.exports = (client, member) => {
-  // Load the guild's settings
-  const settings = client.settings.get(member.guild.id);
 
-  // If welcome is off, don't proceed (don't welcome the user)
+  const settings = client.config.defaultSettings;
   if (!settings.welcomeEnabled === "true") return;
-
-  // Replace the placeholders in the welcome message with actual data
-  const welcomeMessage = settings.welcomeMessage.replace("{{user}}", member.user.tag);
-
-  // Send the welcome message to the welcome channel
-  // There's a place for more configs here.
-  member.guild.channels.find("name", settings.welcomeChannel).send(welcomeMessage).catch(console.error);
+  const newAlertIndex = Math.floor((Math.random()*settings.welcomeMessage.length));
+  const newAlert = settings.welcomeMessage[newAlertIndex];
+  const welcomeMessage = newAlert.replace("{{user}}", member);
+  client.log("Log", member+" join.","Event");
+  member.guild.channels.find("id", "151289667956768768").send(welcomeMessage).catch(console.error);
 };

@@ -7,49 +7,44 @@ module.exports = (client, message) => {
   // and not get into a spam loop (we call that "botception").
   if (message.author.bot) return;
 
+
   // Grab the settings for this server from the PersistentCollection
   // If there is no guild, get default conf (DMs)
   const settings = message.guild
     ? client.settings.get(message.guild.id)
     : client.config.defaultSettings;
 
-  // For ease of use in commands and functions, we'll attach the settings
-  // to the message object, so `message.settings` is accessible.
   message.settings = settings;
+  const msg = message.content.toLowerCase().split(" ");
 
-  // Also good practice to ignore any message that does not start with our prefix,
-  // which is set in the configuration file.
+
+  if (~msg.indexOf("bite")) {return message.channel.send("J'ai trouvé ce que tu recherches, il y a ce qu'il faut en matiére de b*te ici https://www.twitch.tv/t12lve");}
+  if (~msg.indexOf("xd") ||~msg.indexOf("lol") || ~msg.indexOf("mdr")) {return message.channel.send("JMDR TRO LOL XPTDR :joy:");}
+  if (~msg.indexOf("bot")) {return message.channel.send("C'est qui que tu traite de bot? misérable humain!");}
+  if (~msg.indexOf("omg")) {return message.channel.send({file :"./media/omg.png"});}
+
+
   if (message.content.indexOf(settings.prefix) !== 0) return;
-
-  // Here we separate our "command" name, and our "arguments" for the command.
-  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
-  // command = say
-  // args = ["Is", "this", "the", "real", "life?"]
   const args = message.content.slice(settings.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
-  // Get the user or member's permission level from the elevation
+
   const level = client.permlevel(message);
 
-  // Check whether the command, or alias, exist in the collections defined
-  // in app.js.
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
-  // using this const varName = thing OR otherthign; is a pretty efficient
-  // and clean way to grab one of 2 values!
+
   if (!cmd) return;
 
-  // Some commands may not be useable in DMs. This check prevents those commands from running
-  // and return a friendly error message.
   if (cmd && !message.guild && cmd.conf.guildOnly)
-    return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");
+    return message.channel.send("Cette commande ne marche pas MP. Go sur le Text channel de TheHut bae.");
 
   if (client.settings.get(message.guild.id).systemNotice === "true") {
     if (level < client.levelCache[cmd.conf.permLevel])
-      return message.channel.send(`You do not have permission to use this command.
-Your permission level is ${level} (${client.config.permLevels.find(l => l.level === level).name})
-This command requires level ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
+      return message.channel.send(`:raised_hand:  Non je ne crois pas non! tu t'es cru pour qui !?
+Toi t'es qu'un **${client.config.permLevels.find(l => l.level === level).name}** (level ${level})
+Alors qu'il faut etre au minimum **${cmd.conf.permLevel}** (${cmd.conf.permLevel}) pour avoir l'immense honneur de l'utiliser.`);
   }
-  // If the command exists, **AND** the user has permission, run it.
-  client.log("log", `${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "CMD");
+
+  client.log("log", `${client.config.permLevels.find(l => l.level === level).name} <${message.author.username}>  ran command <${cmd.help.name} ${args.join(" ")}>`, "CMD");
   cmd.run(client, message, args, level);
 };

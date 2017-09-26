@@ -1,0 +1,92 @@
+module.exports = {
+  "ownerID": "bot's owner discord id",
+  "token": "screte token here",
+  "pubgTrackerApi": "pubg-tracker api secret",
+  "defaultSettings": {
+    "prefix": ".",
+    "modLogChannel": "log",
+    "modRole": "Modo",
+    "adminRole": "Admin",
+    "systemNotice": "true",
+    "welcomeMessage":  [
+      ":herb: Un {{user}} sauvage apparaît ! :rabbit:",
+      "PRANK! :scream: {{user}} rejoint la hutte, ça tourne mal! :scream: EXPLICATION  ",
+      ":heartpulse: Cheers love {{user}}'s here!  :heartpulse: ",
+      ":pray: Loués soient les Oris! {{user}} nous à rejoint! comme la prophétie l'avait prédit... :pray: ",
+      ":open_mouth: Mais ça va pas {{user}}?!? mais t'es pas net non ?!? Tu vas mettre le feu à la baraque!",
+      ":sweat_drops: \"j'adore le {{user}}, dans vingts ou trente ans, il n'y en aura plus.\" *Jean-Claude Van Damme, juillet 1997.*",
+      ":heavy_check_mark: C’est notre Raïs a nous, {{user}} ! Un grand homme, il marquera l’histoire, il aime les Cochinchinois, les Malgaches, les Sénégalais, les Marocains... C’est donc ton ami. Ce sera ton porte-bonheur.",
+    ],
+    "welcomeChannel" : "chanID",
+    "welcomeEnabled": "false",
+    "leaveMessage":  [
+      "Trop choqué et décu !** {{user}} **est parti... :sob:  RT si c'es triste",
+      "** {{user}} **à fui lachement... et comme un malpropre. :rolling_eyes: ",
+      "ben c'est ça** {{user}} **! Barre toi ! ET FERME LA PORTE EN PARTANT.",
+      "RIP ** {{user}} **, Petit ange parti trop tôt. :angel: ",
+      "T'as les vrai, et puis t'as les mecs comme** {{user}} ** qui se barre sans rien dire. :middle_finger: ",
+      "Putain ! :raised_hands: ** {{user}} **s'est enfin barré ! j'ai cru qu'il partirait jamais!"
+    ],
+    "leaveChannel" : "ChanID",
+    "leaveEnabled": "false",        
+  },
+  permLevels: [
+    {
+      level: 0,
+      name: "User",
+      check: () => true
+    },
+
+    {
+      level: 2,
+      name: "Modo",
+      check: (message) => {
+        try {
+          const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
+          if (modRole && message.member.roles.has(modRole.id)) return true;
+        } catch (e) {
+          return false;
+        }
+      }
+    },
+
+    {
+      level: 3,
+      name: "The Hut",
+      check: (message) => {
+        try {
+          const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
+          return (adminRole && message.member.roles.has(adminRole.id));
+        } catch (e) {
+          return false;
+        }
+      }
+    },
+
+    {
+      level: 4,
+      name: "Server Owner",
+      check: (message) => message.guild.owner.user.id === message.author.id
+    },
+
+    {
+      level: 8,
+      name: "Bot Support",
+      check: (message) => ["id here"].includes(message.author.id)
+    },
+
+
+    {
+      level: 9,
+      name: "Bot Admin",
+      check: (message) => ["id here"].includes(message.author.id)
+    },
+
+
+    {
+      level: 10,
+      name: "Papa",
+      check: (message) => message.client.config.ownerID === message.author.id
+    }
+  ]
+};
