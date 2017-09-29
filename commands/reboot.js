@@ -1,4 +1,4 @@
-let hasPM2;
+let hasPM2=" ";
 
 /*try {
   require.resolve("pm2");
