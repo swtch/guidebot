@@ -20,7 +20,7 @@ module.exports = (client, message) => {
 
   if (~msg.indexOf("bite")) {return message.channel.send("J'ai trouvé ce que tu recherches, il y a ce qu'il faut en matiére de b*te ici https://www.twitch.tv/t12lve");}
   if (~msg.indexOf("xd") ||~msg.indexOf("lol") || ~msg.indexOf("mdr")) {return message.channel.send("JMDR TRO LOL XPTDR :joy:");}
-  if (~msg.indexOf("bot")) {return message.channel.send("C'est qui que tu traite de bot? misérable humain!");}
+  //if (~msg.indexOf("bot")) {return message.channel.send("C'est qui que tu traite de bot? misérable humain!");}
   if (~msg.indexOf("omg")) {return message.channel.send({file :"./media/omg.png"});}
 
 

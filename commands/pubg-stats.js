@@ -7,11 +7,14 @@ exports.run = async (client, message, [pubgID, type, serv], level) => {  // esli
     message.reply(" :no_entry: Non, non, non! Pas ici, là : <#349886150309183488>");
     return;
   }
-  if (!pubgID || !type || !serv) {
-    if (level < client.levelCache[command.conf.permLevel]) return;
-    message.channel.send(`= ${command.help.name} = \n${command.help.description}\nUtilisation:: ${settings.prefix}${command.help.usage}`, { code: "asciidoc" });
-    return;
+  if (!pubgID) {
+    const tracked = client.pubgLivePlayers.get(message.author.id);
+    if (!tracked) return message.channel.send(`= ${command.help.name} = \n${command.help.description}\nUtilisation:: ${settings.prefix}${command.help.usage}`, { code: "asciidoc" });
+    pubgID = tracked.pubgName;
+    type = "squad-fpp";
+    serv = "eu";
   }
+
   const msg = await message.channel.send(`:hourglass: Un instant <@!${message.author.id}>, je récupére tes stats.`);
   const api = new PubgAPI({ apikey: client.config.pubgTrackerApi, });
   api.getProfileByNickname(pubgID)
@@ -19,9 +22,9 @@ exports.run = async (client, message, [pubgID, type, serv], level) => {  // esli
       //console.log(profile)
       //const data = profile.content;
       const stats = profile.getStats({
-        region: serv, // defaults to profile.content.selectedRegion
+        region: serv.toLowerCase() , // defaults to profile.content.selectedRegion
         season: profile.content.defaultSeason, // defaults to profile.content.defaultSeason
-        match: type // defaults to SOLO
+        match: type.toLowerCase() // defaults to SOLO
       });
       var imgURL = stats.avatar.substring(0, stats.avatar.lastIndexOf(".")) + "_full.jpg";
       const embed = new Discord.RichEmbed()
