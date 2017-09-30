@@ -160,7 +160,7 @@ module.exports = (client) => {
                 "imgURL": imgURL,
                 "mention": p.discordName,
                 "title" : "THE LAST GAME",
-                "thumb" : "http://pubgshowcase.com/img/icon-pubg-2.png",
+                "thumb" : "https://image.noelshack.com/fichiers/2017/39/6/1506796081-1.png",
                 "color" : 0xffcc00,
                 "result" : "**WINNER WINNER CHICKEN DINNER!** :trophy:"
               };
@@ -174,7 +174,7 @@ module.exports = (client) => {
                 "imgURL": imgURL,
                 "mention": p.discordName,
                 "title" : "THE LAST GAME",
-                "thumb" : "http://pubgshowcase.com/img/icon-pubg-2.png",
+                "thumb" : "https://image.noelshack.com/fichiers/2017/39/6/1506796112-top10.png",
                 "color" : 0x0099ff,
                 "result" : "**YOU MADE IT TO TOP 10 !**"
               };
@@ -188,7 +188,7 @@ module.exports = (client) => {
                 "imgURL": imgURL,
                 "mention": p.discordName,
                 "title" : "THE LAST GAME",
-                "thumb" : "http://pubgshowcase.com/img/icon-pubg-2.png",
+                "thumb" : "https://image.noelshack.com/fichiers/2017/39/6/1506796105-died.png",
                 "color" : 0xff0000,
                 "result" : "**DIED! BETTER LUCK NEXT TIME...**"
               };
@@ -208,7 +208,7 @@ module.exports = (client) => {
                 "imgURL": imgURL,
                 "mention": p.discordName,
                 "title" : "MULTIPLE GAMES",
-                "thumb" : "http://pubgshowcase.com/img/icon-pubg-2.png",
+                "thumb" : "https://pubgdmgstats.com/img/helmet3.png",
                 "color" : 0x8c8c8c,
                 "result" : `**${lastMatches.rounds} GAMES : **`+result
               };
