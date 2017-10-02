@@ -10,7 +10,7 @@ module.exports = async client => {
   client.pubgLive();
 
 
-  var server = client.api.listen(80, function() {
+  var server = client.api.listen(3000, function() {
     
     var host = server.address().address;
     var port = server.address().port;
