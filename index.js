@@ -7,10 +7,12 @@ const Discord = require("discord.js");
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
-
 const client = new Discord.Client();
 
 
+
+
+// load config file
 client.config = require("./config.js");
 
 require("./modules/functions.js")(client);
@@ -24,6 +26,7 @@ client.settings = new Enmap({ name: "settings", persistent: true });
 
 // Sound Collection
 client.sounds = new Enmap();
+client.soundsList = new Array();
 //client.soundsUse = new Enmap({ name: "soundsUse", persistent: true });
 
 
@@ -57,11 +60,12 @@ const init = async () => {
   });
 
   //Load the sounds lists
+   
   const soundFiles = await readdir("./media/sb/");
   client.log("log", `Loading a total of ${soundFiles.length} sounds.`);
   soundFiles.forEach(mp3 => {
     const soundName = mp3.split(".")[0];
-    //if (!client.soundsUse[soundName] || (client.soundsUse[soundName] <= 0)) {client.soundsUse.set(soundName, 0 );}
+    client.soundsList.push(soundName);
     client.sounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[2], "path": `./media/sb/${mp3}`,"category":mp3.split(".")[1] });
   });
 
@@ -78,4 +82,23 @@ const init = async () => {
 
 
 init();
+
+// Launch SoundBox API server
+const express = require("express");
+const bodyParser = require("body-parser");
+client.port = 3000; 
+client.api = express();
+client.api.use(bodyParser.urlencoded({ extended: false }));
+client.api.use(bodyParser.json()); 
+
+client.api.get("/sb", function(req,res) {
+  res.json({list : client.soundsList, methode : req.method} );
+});
+client.api.post("/play", function(req,res) {
+  client.playSound(req.body.sound,req.body.voiceChannel);
+  res.json({message : "joue le son dans le channel vocal choisi",
+    voiceChannel : req.body.voiceChannel,
+    sound : req.body.sound,
+    methode : req.method});
+});
 

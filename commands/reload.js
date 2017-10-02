@@ -35,7 +35,10 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
     let plu = ["",""];
     if (difference.length > 1)  plu = ["s","x"];
     let output = `= ${difference.length} nouveau${plu[1]} son${plu[0]} ajouté${plu[0]}  =\n`;
-    difference.forEach(e => {output += `${e}:: ${newSounds.find("name",e).description}\n`;});
+    difference.forEach(e => {
+      output += `${e}:: ${newSounds.find("name",e).description}\n`;
+      client.soundsList.push(e);
+    });
     client.sounds = newSounds;
     message.channel.send(`Rechargement des ${soundFiles.length} sons effectué. :ok_hand:`);
     if (difference.length >= 1)  message.guild.channels.find("id","353996227894837248").send(output, { code: "AsciiDoc" }) ;

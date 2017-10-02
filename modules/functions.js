@@ -78,6 +78,19 @@ module.exports = (client) => {
     console.error("Uncaught Promise Error: ", err);
   });
 
+  //sbweb function to play file
+  client.playSound = async (query, voiceChannelID) => {
+    const voiceChannel = client.guilds.find("id","151289667956768768").channels.find("id", voiceChannelID);
+    const sound = client.sounds.get(query);
+    voiceChannel.join()
+      .then(async function(connection) { // Connection is an instance of VoiceConnection
+        const dispatcher = connection.playFile(sound.path);
+      })
+      .catch(async function(error) { client.log("err", error, "SB-API"); 
+      });    
+  };
+
+
   /* PUBG  FUNFCTION */
   const Discord = require("discord.js");
 
