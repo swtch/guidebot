@@ -66,7 +66,7 @@ const init = async () => {
   soundFiles.forEach(mp3 => {
     const soundName = mp3.split(".")[0];
     const cat = mp3.split(".")[1]
-    client.soundsList.push({"name": soundName, "category":mp3.split(".")[1],"description": mp3.split(".")[2]});
+    client.soundsList.push({"name": soundName, "category":cat.toLowerCase(),"description": mp3.split(".")[2]});
     client.sounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[2], "path": `./media/sb/${mp3}`,"category": cat.toLowerCase() });
   });
 
