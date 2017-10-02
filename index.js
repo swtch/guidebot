@@ -84,7 +84,7 @@ const init = async () => {
 
 init();
 
-// Launch SoundBox API server
+// set up the SoundBox API server
 const express = require("express");
 const bodyParser = require("body-parser");
 client.port = 3000; 
