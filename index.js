@@ -92,8 +92,12 @@ client.api.use(bodyParser.urlencoded({ extended: false }));
 client.api.use(bodyParser.json()); 
 
 client.api.get("/sb", function(req,res) {
-  res.json( client.soundsList );
+  res.jsonp( client.soundsList );
 });
+/*client.api.get("/voiceChannel", function(req,res) {
+  const data = client.guilds.find("id","151289667956768768").channels
+  res.json( client.guilds.find("id","151289667956768768").channels.filter("type","voice") );
+});*/
 client.api.post("/play", function(req,res) {
   client.playSound(req.body.sound,req.body.voiceChannel);
   res.json({message : "joue le son dans le channel vocal choisi",
