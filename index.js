@@ -65,8 +65,9 @@ const init = async () => {
   client.log("log", `Loading a total of ${soundFiles.length} sounds.`);
   soundFiles.forEach(mp3 => {
     const soundName = mp3.split(".")[0];
-    client.soundsList.push(soundName);
-    client.sounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[2], "path": `./media/sb/${mp3}`,"category":mp3.split(".")[1] });
+    const cat = mp3.split(".")[1]
+    client.soundsList.push({"name": soundName, "category":mp3.split(".")[1],"description": mp3.split(".")[2]});
+    client.sounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[2], "path": `./media/sb/${mp3}`,"category": cat.toLowerCase() });
   });
 
   // Generate a cache of client permissions

@@ -28,8 +28,9 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
     const newSounds = new Enmap();
     soundFiles.forEach(async (mp3) =>  {
       const soundName = mp3.split(".")[0].toLowerCase();
+      const cat = mp3.split(".")[1]
       //if (!client.soundsUse[soundName] || (client.soundsUse[soundName] <= 0)) {client.soundsUse.set(soundName, 0 );}
-      newSounds.set(soundName,  {"name" : soundName, "description" : mp3.split(".")[1], "path": `./media/sb/${mp3}` });
+      newSounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[2], "path": `./media/sb/${mp3}`,"category": cat.toLowerCase() });
     });
     const difference = diff(client.sounds, newSounds);
     let plu = ["",""];
@@ -37,7 +38,7 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
     let output = `= ${difference.length} nouveau${plu[1]} son${plu[0]} ajouté${plu[0]}  =\n`;
     difference.forEach(e => {
       output += `${e}:: ${newSounds.find("name",e).description}\n`;
-      client.soundsList.push(e);
+      client.soundsList.push({"name": e, "category": newSounds.find("name",e).category,"description": newSounds.find("name",e).description});
     });
     client.sounds = newSounds;
     message.channel.send(`Rechargement des ${soundFiles.length} sons effectué. :ok_hand:`);
