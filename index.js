@@ -92,7 +92,7 @@ client.api.use(bodyParser.urlencoded({ extended: false }));
 client.api.use(bodyParser.json()); 
 
 client.api.get("/sb", function(req,res) {
-  res.json({list : client.soundsList, methode : req.method} );
+  res.json( client.soundsList );
 });
 client.api.post("/play", function(req,res) {
   client.playSound(req.body.sound,req.body.voiceChannel);
