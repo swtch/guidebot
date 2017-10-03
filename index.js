@@ -120,7 +120,7 @@ client.api.post("/play", function(req,res) {
     methode : req.method});
 });
 client.api.post("/play/:sound", function(req,res) {
-  client.playSound(req.params.sound,req.body.userID);
+  client.playSoundByUserID(req.params.sound,req.body.userID);
   res.json({message : "joue le son dans le channel vocal choisi",
     userID : req.body.userID,
     sound : req.params.sound,

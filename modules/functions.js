@@ -89,7 +89,16 @@ module.exports = (client) => {
       .catch(async function(error) { client.log("err", error, "SB-API"); 
       });    
   };
-
+  client.playSoundByUserID = async (query, userID) => {
+    const voiceChannel = client.theHut.members.find("id",userID).voiceChannel;
+    const sound = client.sounds.get(query);
+    voiceChannel.join()
+      .then(async function(connection) { // Connection is an instance of VoiceConnection
+        const dispatcher = connection.playFile(sound.path);
+      })
+      .catch(async function(error) { client.log("err", error, "SB-API"); 
+      });    
+  };
 
   /* PUBG  FUNFCTION */
   const Discord = require("discord.js");
