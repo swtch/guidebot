@@ -1,7 +1,7 @@
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const user = message.mentions.users.first();
-  const amount = parseInt(message.content.split(" ")[1]) ? parseInt(message.content.split(" ")[1]) : parseInt(message.content.split(" ")[2]);
-  if (message.member.id !== "152141690650492928") {return;}
+  const amount = parseInt(args[0]);
+  
 
   if (!amount && user) return message.reply("Oui, mais combien de message ???");
   if (!amount && !user) return message.reply("Non, pas comme ça! Je veux un utilisateur et un nombre de messages à effacer, ou juste un nombre.");
