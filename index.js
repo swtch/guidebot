@@ -99,8 +99,10 @@ client.api.get("/sb", function(req,res) {
 // GET if user granted to use SB-web
 client.api.get("/isGranted/:user_id", function(req,res) {
   let isGranted = false;
-  const memberRole = client.theHut.members.find("id",req.params.user_id).roles;
-  if (memberRole) isGranted = memberRole.exists("id", "364760344629084160");
+  if (client.theHut.members.exists("id",req.params.user_id )) {
+    const memberRole = client.theHut.members.find("id",req.params.user_id).roles;
+    isGranted = memberRole.exists("id", "364760344629084160");
+  }
   else isGranted = false;
   res.jsonp( isGranted );
 });
