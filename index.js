@@ -97,9 +97,11 @@ client.api.get("/sb", function(req,res) {
   res.jsonp( client.soundsList );
 });
 // GET if user granted to use SB-web
-client.api.get('/isGranted/:user_id', function(req,res) {
+client.api.get("/isGranted/:user_id", function(req,res) {
+  let isGranted = false;
   const memberRole = client.theHut.members.find("id",req.params.user_id).roles;
-  const isGranted = memberRole.exists("id", "364760344629084160");
+  if (memberRole) isGranted = memberRole.exists("id", "364760344629084160");
+  else isGranted = false;
   res.jsonp( isGranted );
 });
 //GET voicechannel list
