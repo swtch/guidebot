@@ -65,7 +65,7 @@ const init = async () => {
   client.log("log", `Loading a total of ${soundFiles.length} sounds.`);
   soundFiles.forEach(mp3 => {
     const soundName = mp3.split(".")[0];
-    const cat = mp3.split(".")[1]
+    const cat = mp3.split(".")[1];
     client.soundsList.push({"name": soundName, "category":cat.toLowerCase(),"description": mp3.split(".")[2]});
     client.sounds.set(soundName.toLowerCase(), { "name": soundName.toLowerCase(), "description": mp3.split(".")[2], "path": `./media/sb/${mp3}`,"category": cat.toLowerCase() });
   });
@@ -92,13 +92,22 @@ client.api = express();
 client.api.use(bodyParser.urlencoded({ extended: false }));
 client.api.use(bodyParser.json()); 
 
+// GET liste des sons
 client.api.get("/sb", function(req,res) {
   res.jsonp( client.soundsList );
 });
+// GET if user granted to use SB-web
+client.api.get('/isGranted/:user_id', function(req,res) {
+  const memberRole = client.theHut.members.find("id",req.params.user_id).roles;
+  const isGranted = memberRole.exists("id", "364760344629084160");
+  res.jsonp( isGranted );
+});
+//GET voicechannel list
 client.api.get("/voiceChannel", function(req,res) {
   const data = client.guilds.find("id","151289667956768768").channels;
   res.jsonp( data.findAll("type","voice") );
 });
+//Post file to play
 client.api.post("/play", function(req,res) {
   client.playSound(req.body.sound,req.body.voiceChannel);
   res.json({message : "joue le son dans le channel vocal choisi",
@@ -106,4 +115,10 @@ client.api.post("/play", function(req,res) {
     sound : req.body.sound,
     methode : req.method});
 });
+/*client.api.post("/stop", function(req,res) {
+  client.voiceConnections.random().disconnect();
+  client.playSound(req.body.sound,req.body.voiceChannel);
+  res.json({message : "stop la lecture en cours",
+    methode : req.method});
+})*/
 

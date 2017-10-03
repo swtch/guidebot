@@ -15,7 +15,9 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
       .setFooter(`${settings.prefix}request <description> <liens vers son> |  ©sw3tch`)
       .setColor(0xff0066);
     message.guild.channels.find("id", "353996227894837248").send({ embed });
-    message.reply("C'est noté chef ! Tu peux consulter ta requête ainsi que les autres ici: <#353996227894837248>");
+    const msg = await message.reply("C'est noté chef ! Tu peux consulter ta requête ainsi que les autres ici: <#353996227894837248>");
+    msg.delete(60000);
+    message.delete(0);
   }
 };
 
