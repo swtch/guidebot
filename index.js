@@ -83,7 +83,7 @@ const init = async () => {
 
 
 init();
-
+/*-----------------------------------------------------------API SOUNDBOARD---------------------------------------*/
 // set up the SoundBox API server
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -99,7 +99,7 @@ client.api.get("/sb", function(req,res) {
 // GET if user granted to use SB-web
 client.api.get("/isGranted/:user_id", function(req,res) {
   let isGranted = false;
-  if (client.theHut.members.exists("id",req.params.user_id) && client.theHut.members.find("id",req.params.user_id).voiceChannel ) {
+  if ((client.theHut.members.exists("id",req.params.user_id) && client.theHut.members.find("id",req.params.user_id).voiceChannel) ) {
     const memberRole = client.theHut.members.find("id",req.params.user_id).roles;
     isGranted = memberRole.exists("id", "364760344629084160");
   }
@@ -110,6 +110,19 @@ client.api.get("/isGranted/:user_id", function(req,res) {
 client.api.get("/voiceChannel", function(req,res) {
   const data = client.guilds.find("id","151289667956768768").channels;
   res.jsonp( data.findAll("type","voice") );
+});
+client.api.get("/userInfo/:user_id", function(req, res) {
+  const member = client.theHut.members.find("id", req.params.user_id);
+  function propTest(pere, fils) {
+    if (!pere) {return null;} 
+    else {return pere[fils];} } 
+  res.jsonp({
+    status : member.presence.status,
+    playing : member.presence.game,
+    roleName : propTest(member.hoistRole, "name"),
+    voiceChannel : propTest(member.voiceChannel, "name"),
+    voiceChannelUsers : propTest(propTest(member.voiceChannel, "members"), "size")
+  });
 });
 //Post file to play
 client.api.post("/play", function(req,res) {
