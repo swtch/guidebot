@@ -99,7 +99,7 @@ client.api.get("/sb", function(req,res) {
 // GET if user granted to use SB-web
 client.api.get("/isGranted/:user_id", function(req,res) {
   let isGranted = false;
-  if (client.theHut.members.exists("id",req.params.user_id )) {
+  if (client.theHut.members.exists("id",req.params.user_id) && client.theHut.members.find("id",req.params.user_id).voiceChannel ) {
     const memberRole = client.theHut.members.find("id",req.params.user_id).roles;
     isGranted = memberRole.exists("id", "364760344629084160");
   }
@@ -119,17 +119,12 @@ client.api.post("/play", function(req,res) {
     sound : req.body.sound,
     methode : req.method});
 });
-client.api.post("/play/:sound", function(req,res) {
+//POST file to play
+client.api.post("/play/:sound", function(req,res) { 
   client.playSoundByUserID(req.params.sound,req.body.userID);
   res.json({message : "joue le son dans le channel vocal choisi",
     userID : req.body.userID,
     sound : req.params.sound,
     methode : req.method});
 });
-/*client.api.post("/stop", function(req,res) {
-  client.voiceConnections.random().disconnect();
-  client.playSound(req.body.sound,req.body.voiceChannel);
-  res.json({message : "stop la lecture en cours",
-    methode : req.method});
-})*/
 
