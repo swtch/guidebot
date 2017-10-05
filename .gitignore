@@ -7,7 +7,7 @@ yarn-error.log*
 config.json
 config.js
 data/
-medi/sb
+media/sb
 
 # Runtime data
 pids
