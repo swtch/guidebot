@@ -37,10 +37,10 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     const sound = client.sounds.get(query);
     message.member.voiceChannel.join()
       .then(async function(connection) { // Connection is an instance of VoiceConnection
-        const dispatcher = connection.playFile(sound.path);
+        client.dispatcher = connection.playFile(sound.path);
         message.delete();
         const msg = await message.channel.send(`:microphone2: **Playing:** \`${sound.name} :: ${sound.description}\``);
-        msg.delete(5000); 
+        msg.delete(5000);
       })
       .catch(async function(error) {
         const msg = await message.reply(`:poop: Oui mais non. Pas envie... Tu es sur que \`${settings.prefix}sb ${query}\` existe?  \`${settings.prefix}sb list\` pour recevoir la liste des sons dispo. `);
