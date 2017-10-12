@@ -242,7 +242,7 @@ module.exports = (client) => {
         })
         .catch(error => { 
           client.log("err", error,"PUBG-Tracker"); 
-          //console.log(error);
+          // console.log(error);
         });
     });
     setTimeout(client.pubgLive, 120000);
