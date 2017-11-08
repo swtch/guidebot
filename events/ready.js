@@ -10,7 +10,7 @@ module.exports = async client => {
   client.guilds.filter(g => !client.settings.has(g.id)).forEach(g => client.settings.set(g.id, client.config.defaultSettings));
   
   // launch PUBG tracker
-  client.pubgLive();
+  //client.pubgLive();
 
 // launch the SB API Server
   var server = client.api.listen(3000, function() {
