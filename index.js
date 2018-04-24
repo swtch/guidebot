@@ -23,6 +23,7 @@ client.aliases = new Enmap();
 
 
 client.settings = new Enmap({ name: "settings", persistent: true });
+client.tips = new Enmap({ name: "tips", persistent: true });
 
 // Sound Collection
 client.sounds = new Enmap();

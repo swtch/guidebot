@@ -7,7 +7,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
         if (eft[key]) return message.reply("Cette \"Tips\" existe déja");
         if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
         eft[key] = value.join(" ");
-        client.settings.set(message.guild.id, settings);
+        client.tips.set(message.guild.id, tips);
         message.reply(`${key} à até ajouté avec comme valeur: ${value.join(" ")}`);
       } else
       if (action === "edit") {
