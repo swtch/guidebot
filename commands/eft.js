@@ -57,6 +57,6 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
       name: "eft",
       category: "Escape from Tarkov",
       description: "permet d'ajouter, de supprimer et de consulter des tips pour Escape from Tarkov ",
-      usage: "eft <add/view/del/list [nom du tips]>"
+      usage: "eft <add/view/edit/del [nom du tips]>"
     };
        
