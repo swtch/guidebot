@@ -1,3 +1,4 @@
+const { inspect } = require("util");
 exports.run = async (client, message, [action, key, ...value], level) => { // eslint-disable-line no-unused-vars
 
     const game = 'tarkov'
