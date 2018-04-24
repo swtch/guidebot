@@ -27,7 +27,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
         const response = await client.awaitReply(message, `Etes vous sur de vouloir supprimer ${key}? (oui/non)`);
         if (["o", "oui", "ouais","y","yes"].includes(response)) {
           delete tips[key];
-          this.client.tips.set(game, settings);
+          this.client.tips.set(game, tips);
           message.reply(`${key} à bien été supprimer.`);
         } else
         if (["n","no","non"].includes(response)) {
@@ -39,7 +39,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
       if (action === "view") {
         if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
         if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
-        message.reply(`la valeur de ${key} est actuellement ${settings[key]}`);
+        message.reply(`la valeur de ${key} est actuellement ${tips[key]}`);
       } else {
         message.channel.send(inspect(tips), {code: "json"});
       }
