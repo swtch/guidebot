@@ -1,7 +1,8 @@
 exports.run = async (client, message, [action, key, ...value], level) => { // eslint-disable-line no-unused-vars
 
-    const tips = client.tips.get()
     const game = 'tarkov'
+    const tips = client.tips.get(game)
+    
 
     if (action === "add") {
         if (!key) return message.reply("Merci de préciser le \"Tips\" à ajouter");
