@@ -19,7 +19,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
             if (!key) return message.reply("Merci de préciser la \"Tips\" à editer");
             if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
             if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
-            tips[key] = { "name": key, "author": `<@!${message.author.username}>`, "content": value.join(" "), "timestamp": message.createdAt , "avatarURL" : message.author.avatarURL};
+            tips[key] = { "name": key, "author": message.author.username, "content": value.join(" "), "timestamp": message.createdAt , "avatarURL" : message.author.avatarURL};
             client.tips.set(game, tips);
             message.channel.send(`:white_check_mark: ${key} à até modifié par le contenu suivant: \`\`\`${value.join(" ")}\`\`\`}`);
         } else
@@ -28,7 +28,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
             if (action === "del") {
                 if (!key) return message.reply("Merci de préciser la \"Tips\" à supprimer");
                 if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
-                const response = await client.awaitReply(message, `Etes vous sur de vouloir supprimer ${key}? (oui/non)`);
+                const response = await client.awaitReply(message, `Etes tu sûres de vouloir supprimer **${key}**? (oui/non)`);
                 if (["o", "oui", "ouais", "y", "yes"].includes(response)) {
                     message.reply(`${key} à bien été supprimer.`);
                     delete tips[key];
@@ -46,17 +46,19 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
                     const theTips = tips[key]
                     const embed = new Discord.RichEmbed()
-                        .setTitle(String(key.toUpperCase()))
-                        .setAuthor(theTips.name)
+                        .setTitle("Escape from Tarkov Tips")
+                        .setAuthor(theTips.author, theTips.avatarURL)
                         .setColor(0x524918)
                         //.setThumbnail(imgURL)
                         .setTimestamp(theTips.timestamp)
                         //.setURL("https://pubgtracker.com/profile/pc/" + pubgID + "?region=" + serv)
-                        .addField(":information_source: ", theTips.content, true);
+                        .addField(theTips.name, theTips.content, true);
 
                     message.channel.send({ embed });
                 } else {
-                    message.channel.send(inspect(tips), { code: "json" });
+                    let output = "= Liste des Tips Escape from Trakov =\n";
+                    tips.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
+                    message.channel.send(output,{ code: "asciidoc"});
                 }
 
 };
