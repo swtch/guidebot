@@ -30,7 +30,6 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                 if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
                 const response = await client.awaitReply(message, `Etes tu sûres de vouloir supprimer **${key}**? (oui/non)`);
                 if (["o", "oui", "ouais", "y", "yes"].includes(response)) {
-                    message.reply(`${key} à bien été supprimer.`);
                     delete tips[key];
                     client.tips.set(game, tips);
                     message.reply(`**${key}** à bien été supprimé.`);
