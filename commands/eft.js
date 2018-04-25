@@ -74,6 +74,6 @@ exports.conf = {
 exports.help = {
     name: "eft",
     category: "Escape from Tarkov",
-    description: "permet d'ajouter, de supprimer et de consulter des tips pour Escape from Tarkov ",
-    usage: "eft <add/view/edit/del [nom du tips]>"
+    description: "Permet d'ajouter, de supprimer, d'editer et de consulter des tips pour Escape from Tarkov ",
+    usage: "eft <add/view/edit/del> <titre du tips> <contenu (texte ou liens)>"
 };
