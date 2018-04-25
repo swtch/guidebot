@@ -44,7 +44,11 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
                     if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
                     const theTips = tips[key]
-                    const url = theTips.content.toString().find(u => {return u.startsWith("http");});
+                    const url = theTips.content.toString().find(u => {
+                      if (u.startsWith("http")) {
+                        return u.startsWith("http");
+                      } else {return "https://www.escapefromtarkov.com/"};
+                    });
                     const embed = new Discord.RichEmbed()
                         .setTitle(theTips.name)
                         .setAuthor("Escape from Tarkov Tips","https://trademarks.justia.com/media/image.php?serial=79161402")
@@ -77,8 +81,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
 
                     message.channel.send(`:information_source: **${theTips.name}** || *Tarkov tips by ${theTips.author}*\n ${theTips.content} `);
                   }
-
-                {
+                  else     {
                     //let output = "= Liste des Tips Escape from Tarkov =\n";
                     //client.tips.tarkov.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
                     //message.channel.send(output,{ code: "asciidoc"});
