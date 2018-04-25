@@ -44,48 +44,17 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
                     if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
                     const theTips = tips[key]
-                    const url = theTips.content.toString().find(u => {
-                      if (u.startsWith("http")) {
-                        return u.startsWith("http");
-                      } else {return "https://www.escapefromtarkov.com/"};
-                    });
-                    const embed = new Discord.RichEmbed()
-                        .setTitle(theTips.name)
-                        .setAuthor("Escape from Tarkov Tips","https://trademarks.justia.com/media/image.php?serial=79161402")
-                        .setColor(0x524918)
-                        .setThumbnail("https://trademarks.justia.com/media/image.php?serial=79161402")
-                        .setTimestamp(theTips.timestamp)
-                        .setURL(url)
-                        .setImage(url)
-                        .setDescription(theTips.content)
-                        .setFooter(`Auteur : ${theTips.author}`, theTips.avatarURL);
-
-                    message.channel.send({ embed });
+                    message.channel.send(`:information_source: **${theTips.name}** || *Tarkov tips by ${theTips.author}*\n ${theTips.content} `);
                 } else
                   if (tips[action]) {
-
-                    //if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
-                    //if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
-                    const theTips = tips[action]
-                    //const url = theTips.content;
-                    /*const embed = new Discord.RichEmbed()
-                        .setTitle(theTips.name)
-                        .setAuthor("Escape from Tarkov Tips","https://trademarks.justia.com/media/image.php?serial=79161402")
-                        .setColor(0x524918)
-                        .setThumbnail("https://trademarks.justia.com/media/image.php?serial=79161402")
-                        .setTimestamp(theTips.timestamp)
-                        .setURL(url)
-                        .setImage(url)
-                        .setDescription(theTips.content)
-                        .setFooter(`Auteur : ${theTips.author}`, theTips.avatarURL);*/
-
+                    const theTips = tips[action];
                     message.channel.send(`:information_source: **${theTips.name}** || *Tarkov tips by ${theTips.author}*\n ${theTips.content} `);
                   }
                   else     {
-                    //let output = "= Liste des Tips Escape from Tarkov =\n";
-                    //client.tips.tarkov.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
-                    //message.channel.send(output,{ code: "asciidoc"});
-                    message.channel.send(inspect(tips), {code: "json"});
+                    let output = "= Liste des Tips Escape from Tarkov =\n";
+                    tips.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
+                    message.channel.send(output,{ code: "asciidoc"});
+                    //message.channel.send(inspect(tips), {code: "json"});
                 }
 
 };
