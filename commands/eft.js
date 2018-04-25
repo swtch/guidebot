@@ -9,19 +9,19 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
         
         if (key == 0) return message.reply("Merci de préciser le \"Tips\" à ajouter");
         if (tips[key]) return message.reply("Cette \"Tips\" existe déja");
-        if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
+        if (value.length < 1) return message.reply("Erreur, aucun contenu specifiée :: eft add titre contenu");
         tips[key] = {"name": key, "author" : `<@!${message.author.id}>` , "content": value.join(" "), "timestamp" : message.createdAt };
         client.tips.set(game, tips);
-        message.reply(`${key} à até ajouté avec comme valeur: ${value.join(" ")} ${tips} `);
+        message.channel.send(`:white_check_mark: **${key}** a bien été ajouté avec comme contenu: \`\`\`${value.join(" ")}\`\`\``);
       } else
 
       if (action === "edit") {
         if (!key) return message.reply("Merci de préciser la \"Tips\" à editer");
         if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
         if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
-        tips[key] = value.join(" ");
+        tips[key] = {"name": key, "author" : `<@!${message.author.id}>` , "content": value.join(" "), "timestamp" : message.createdAt };
         client.tips.set(game, tips);
-        message.reply(`${key} à até modifié avec comme valeur: ${value.join(" ")}`);
+        message.channel.send(`:white_check_mark: ${key} à até modifié par le contenu suivant: \`\`\`${value.join(" ")}\`\`\`}`);
       } else
       
     
@@ -30,6 +30,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
         if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
         const response = await client.awaitReply(message, `Etes vous sur de vouloir supprimer ${key}? (oui/non)`);
         if (["o", "oui", "ouais","y","yes"].includes(response)) {
+            message.reply(`${key} à bien été supprimer.`);
           delete tips[key];
           this.client.tips.set(game, tips);
           message.reply(`${key} à bien été supprimer.`);
@@ -43,7 +44,17 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
       if (action === "view") {
         if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
         if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
-        message.reply(`la valeur de ${key} est actuellement ${tips[key]}`);
+        const theTips = tips[key]
+        const embed = new Discord.RichEmbed()
+            .setTitle(String(key.toUpperCase()))
+            .setAuthor(theTips.name)
+            .setColor(0x524918)
+            //.setThumbnail(imgURL)
+            .setTimestamp(theTips.timestamp)
+            //.setURL("https://pubgtracker.com/profile/pc/" + pubgID + "?region=" + serv)
+            .addField(":information_source: ", theTips.content, true);
+       
+        message.channel.send({ embed });
       } else {
         message.channel.send(inspect(tips), {code: "json"});
       }
