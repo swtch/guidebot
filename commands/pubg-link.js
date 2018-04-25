@@ -3,6 +3,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   const settings = message.guild ? client.settings.get(message.guild.id) : client.config.defaultSettings;
   const pubgID = args[0];
   const  player = client.pubgLivePlayers.get(message.author.id);
+  
   if (!pubgID) {
     if (level < client.levelCache[command.conf.permLevel]) return;
     message.channel.send(`= ${command.help.name} = \n${command.help.description}\nUtilisation:: ${settings.prefix}${command.help.usage}`, { code: "asciidoc" });
