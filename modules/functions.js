@@ -1,6 +1,6 @@
 module.exports = (client) => {
   const Enmap = require("enmap");
- 
+
 
   client.permlevel = message => {
     let permlvl = 0;
@@ -86,8 +86,8 @@ module.exports = (client) => {
       .then(async function(connection) { // Connection is an instance of VoiceConnection
         const dispatcher = connection.playFile(sound.path);
       })
-      .catch(async function(error) { client.log("err", error, "SB-API"); 
-      });    
+      .catch(async function(error) { client.log("err", error, "SB-API");
+      });
   };
   client.playSoundByUserID = async (query, userID) => {
     const voiceChannel = client.theHut.members.find("id",userID).voiceChannel;
@@ -96,11 +96,11 @@ module.exports = (client) => {
       .then(async function(connection) { // Connection is an instance of VoiceConnection
         const dispatcher = connection.playFile(sound.path);
       })
-      .catch(async function(error) { client.log("err", error, "SB-API"); 
-      });    
+      .catch(async function(error) { client.log("err", error, "SB-API");
+      });
   };
 
-  /* PUBG  FUNFCTION */
+  /* PUBG  FUNCTION */
   const Discord = require("discord.js");
 
 
@@ -149,7 +149,7 @@ module.exports = (client) => {
       .addField(":medal: RATING CHANGE", ratingCh, true);
     dm.createDM()
       .then(function(channel) {
-        channel.send("Voilà Bébé! les stats de ta ou tes dernières games:"); 
+        channel.send("Voilà Bébé! les stats de ta ou tes dernières games:");
         channel.send({ embed });
       });
   };
@@ -159,7 +159,7 @@ module.exports = (client) => {
     const api = new PubgAPI({ apikey: client.config.pubgTrackerApi, });
     client.pubgLivePlayers.forEach((p) => {
       const pubgID = p.pubgName;
-      
+
       api.getProfileByNickname(pubgID)
         .then((profile) => {
           const matchH = profile.getMatchHistory();
@@ -173,7 +173,7 @@ module.exports = (client) => {
             p.lastGameID = lastMatches.id;
             client.pubgLivePlayers.set(p.id, p);
             let embedProp = {};
-            
+
             // TOP 1
             if (lastMatches.rounds === 1 & lastMatches.wins === 1) {
               embedProp = {
@@ -240,12 +240,12 @@ module.exports = (client) => {
             else { return; }
           }
         })
-        .catch(error => { 
-          client.log("err", error,"PUBG-Tracker"); 
+        .catch(error => {
+          client.log("err", error,"PUBG-Tracker");
           // console.log(error);
         });
     });
     setTimeout(client.pubgLive, 120000);
-  };    
+  };
 
 };
