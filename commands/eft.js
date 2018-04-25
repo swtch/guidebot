@@ -8,7 +8,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
     if (action === "add") {
         
         if (key == 0) return message.reply("Merci de préciser le \"Tips\" à ajouter");
-        if (client.tips[0].get(key)) return message.reply("Cette \"Tips\" existe déja");
+        if (tips.get(key)) return message.reply("Cette \"Tips\" existe déja");
         if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
         //tips[key] = value.join(" ");
         //client.tips.set(game, tips);
