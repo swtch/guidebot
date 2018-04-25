@@ -57,7 +57,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     message.channel.send({ embed });
                 } else {
                     let output = "= Liste des Tips Escape from Trakov =\n";
-                    client.tips['tarkov'].forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
+                    tips.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
                     message.channel.send(output,{ code: "asciidoc"});
                 }
 
