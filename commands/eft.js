@@ -52,7 +52,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                   }
                   else     {
                     let output = "= Liste des Tips Escape from Tarkov =\n";
-                    Object.keys(tips).forEach(t => { *output += `\n${t}`;});
+                    Object.keys(tips).forEach(t => { output += `\n${t}`;});
                     message.channel.send(output,{ code: "asciidoc"});
                     //message.channel.send(inspect(tips), {code: "json"});
                 }
