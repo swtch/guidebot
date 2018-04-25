@@ -11,8 +11,8 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
         if (tips[key]) return message.reply("Cette \"Tips\" existe déja");
         if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
         tips[key] =   {"name": key, "author" : `<@!${message.author.id}>` , "content": value.join(" "), "timestamp" : message.createdAt }
-        //client.tips.set(game, tips);
-        message.reply(`${key} à até ajouté avec comme valeur: ${value.join(" ")}`);
+        client.tips.set(game, tips);
+        message.reply(`${key} à até ajouté avec comme valeur: ${value.join(" ")} ${tips} `);
       } else
 
       if (action === "edit") {
