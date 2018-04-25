@@ -75,7 +75,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                         .setDescription(theTips.content)
                         .setFooter(`Auteur : ${theTips.author}`, theTips.avatarURL);*/
 
-                    message.channel.send('a\nb');
+                    message.channel.send(`:information_source: **${theTips.name}** || *Tarkov tips by ${theTips.author}*\n ${theTips.content} `);
                   }
 
                 {
