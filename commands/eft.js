@@ -21,7 +21,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
             if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
             tips[key] = { "name": key, "author": message.author.username, "content": value.join(" "), "timestamp": message.createdAt , "avatarURL" : message.author.avatarURL};
             client.tips.set(game, tips);
-            message.channel.send(`:white_check_mark: ${key} à até modifié par le contenu suivant: \`\`\`${value.join(" ")}\`\`\`}`);
+            message.channel.send(`:white_check_mark: **${key}** à été modifié avec le contenu suivant: \`\`\`${value.join(" ")}\`\`\``);
         } else
 
 
@@ -33,7 +33,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     message.reply(`${key} à bien été supprimer.`);
                     delete tips[key];
                     client.tips.set(game, tips);
-                    message.reply(`${key} à bien été supprimer.`);
+                    message.reply(`**${key}** à bien été supprimé.`);
                 } else
                     if (["n", "no", "non"].includes(response)) {
                         message.reply("Action annulé.");
