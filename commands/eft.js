@@ -1,13 +1,13 @@
 const { inspect } = require("util");
 exports.run = async (client, message, [action, key, ...value], level) => { // eslint-disable-line no-unused-vars
 
-    const game = 'tarkov'
+    const game = 'tarkov';
     const tips = client.tips.get(game)
     
 
     if (action === "add") {
         if (!key) return message.reply("Merci de préciser le \"Tips\" à ajouter");
-        if (tips[key]) return message.reply("Cette \"Tips\" existe déja");
+        //if (tips[key]) return message.reply("Cette \"Tips\" existe déja");
         if (value.length < 1) return message.reply("Erreur, aucune valeur specifiée");
         tips[key] = value.join(" ");
         client.tips.set(game, tips);
