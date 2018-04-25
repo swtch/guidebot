@@ -1,6 +1,6 @@
 const { inspect } = require("util");
 exports.run = async (client, message, [action, key, ...value], level) => { // eslint-disable-line no-unused-vars
-
+    const Discord = require("discord.js");
     const game = 'tarkov';
     const tips = client.tips.get(game)
     
@@ -31,7 +31,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
         const response = await client.awaitReply(message, `Etes vous sur de vouloir supprimer ${key}? (oui/non)`);
         if (["o", "oui", "ouais","y","yes"].includes(response)) {
             message.reply(`${key} à bien été supprimer.`);
-          delete tips[key];
+            tips.delete(key)
           this.client.tips.set(game, tips);
           message.reply(`${key} à bien été supprimer.`);
         } else
