@@ -44,18 +44,41 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
                     if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
                     const theTips = tips[key]
+                    const url = theTips.content.find(u => {return u.startsWith("http");});
                     const embed = new Discord.RichEmbed()
                         .setTitle(theTips.name)
                         .setAuthor("Escape from Tarkov Tips","https://trademarks.justia.com/media/image.php?serial=79161402")
                         .setColor(0x524918)
                         .setThumbnail("https://trademarks.justia.com/media/image.php?serial=79161402")
                         .setTimestamp(theTips.timestamp)
-                        //.setURL("https://pubgtracker.com/profile/pc/" + pubgID + "?region=" + serv)
+                        .setURL(url)
+                        .setImage(url)
                         .setDescription(theTips.content)
                         .setFooter(`Auteur : ${theTips.author}`, theTips.avatarURL);
 
                     message.channel.send({ embed });
-                } else {
+                } else
+                  if (tips[action]) {
+
+                    //if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
+                    //if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
+                    const theTips = tips[action]
+                    const url = theTips.content.find(u => {return u.startsWith("http");});
+                    const embed = new Discord.RichEmbed()
+                        .setTitle(theTips.name)
+                        .setAuthor("Escape from Tarkov Tips","https://trademarks.justia.com/media/image.php?serial=79161402")
+                        .setColor(0x524918)
+                        .setThumbnail("https://trademarks.justia.com/media/image.php?serial=79161402")
+                        .setTimestamp(theTips.timestamp)
+                        .setURL(url)
+                        .setImage(url)
+                        .setDescription(theTips.content)
+                        .setFooter(`Auteur : ${theTips.author}`, theTips.avatarURL);
+
+                    message.channel.send({ embed });
+                  }
+
+                {
                     //let output = "= Liste des Tips Escape from Tarkov =\n";
                     //client.tips.tarkov.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
                     //message.channel.send(output,{ code: "asciidoc"});
