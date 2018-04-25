@@ -10,7 +10,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
         if (key == 0) return message.reply("Merci de préciser le \"Tips\" à ajouter");
         if (tips[key]) return message.reply("Cette \"Tips\" existe déja");
         if (value.length < 1) return message.reply("Erreur, aucun contenu specifiée :: eft add titre contenu");
-        tips[key] = { "name": key, "author": `<@!${message.author.username}>`, "content": value.join(" "), "timestamp": message.createdAt , "avatarURL" : message.author.avatarURL};
+        tips[key] = { "name": key, "author": `${message.author.username}`, "content": value.join(" "), "timestamp": message.createdAt , "avatarURL" : message.author.avatarURL};
         client.tips.set(game, tips);
         message.channel.send(`:white_check_mark: **${key}** a bien été ajouté avec comme contenu: \`\`\`${value.join(" ")}\`\`\``);
     } else
@@ -46,19 +46,21 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
                     const theTips = tips[key]
                     const embed = new Discord.RichEmbed()
-                        .setTitle("Escape from Tarkov Tips")
-                        .setAuthor(theTips.author, theTips.avatarURL)
+                        .setTitle(theTips.name)
+                        .setAuthor("Escape from Tarkov Tips","https://trademarks.justia.com/media/image.php?serial=79161402")
                         .setColor(0x524918)
-                        //.setThumbnail(imgURL)
+                        .setThumbnail("https://trademarks.justia.com/media/image.php?serial=79161402")
                         .setTimestamp(theTips.timestamp)
                         //.setURL("https://pubgtracker.com/profile/pc/" + pubgID + "?region=" + serv)
-                        .addField(theTips.name, theTips.content, true);
+                        .setDescription(theTips.content)
+                        .setFooter(`Auteur : ${theTips.author}`, theTips.avatarURL);
 
                     message.channel.send({ embed });
                 } else {
-                    let output = "= Liste des Tips Escape from Trakov =\n";
-                    client.tips.tarkov.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
-                    message.channel.send(output,{ code: "asciidoc"});
+                    //let output = "= Liste des Tips Escape from Tarkov =\n";
+                    //client.tips.tarkov.forEach(t => { output += `\n${t.name}     ::     Auteur: ${t.author}`;});
+                    //message.channel.send(output,{ code: "asciidoc"});
+                    message.channel.send(inspect(tips), {code: "json"});
                 }
 
 };
