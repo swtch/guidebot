@@ -44,7 +44,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     if (!key) return message.reply("Merci de préciser la \"Tips\" que tu veux consulter");
                     if (!tips[key]) return message.reply("Cette \"Tips\" n'existe pas");
                     const theTips = tips[key]
-                    const url = theTips.content;
+                    const url = theTips.content.toString().find(u => {return u.startsWith("http");});
                     const embed = new Discord.RichEmbed()
                         .setTitle(theTips.name)
                         .setAuthor("Escape from Tarkov Tips","https://trademarks.justia.com/media/image.php?serial=79161402")
