@@ -26,7 +26,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
       }
       reply += `    \n ${c.name}${" ".repeat(longest - c.name.length)}::  ${c.description}`;});
    
-    message.reply("Go en MP poulet.");
+    message.reply("Go en MP et fait tourner la dickpic.");
     message.author.createDM()
       .then(function(channel) { channel.send(reply, { code: "asciidoc", split : true }); });
     return;
