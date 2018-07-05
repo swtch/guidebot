@@ -51,7 +51,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
                     message.channel.send(`:information_source: **${theTips.name}** || *Tarkov tips by ${theTips.author}*\n ${theTips.content} `);
                   }
                   else     {
-                    let output = "= Liste des Tips Escape from Tarkov =\n";
+                    let output = "= Liste des Tips pour (RIP) Escape from Tarkov =\n";
                     Object.keys(tips).forEach(t => { output += `\n${t}`;});
                     message.channel.send(output,{ code: "asciidoc"});
                     //message.channel.send(inspect(tips), {code: "json"});

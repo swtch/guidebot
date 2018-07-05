@@ -18,7 +18,6 @@ module.exports = (client, message) => {
   const msg = message.content.toLowerCase().split(" ");
 
 
-  if (~msg.indexOf("bite")) {return message.channel.send("J'ai trouvé ce que tu recherches, il y a ce qu'il faut en matiére de b*te ici https://www.twitch.tv/t12lve");}
   if (~msg.indexOf("xd") ||~msg.indexOf("lol") || ~msg.indexOf("mdr")) {return message.channel.send("JMDR TRO LOL XPTDR :joy:");}
   if (~msg.indexOf("bot")) {return message.channel.send("Ah bon!? Seulement sur la base de mon apparence vous jugez que je suis un bot...? c'est intérressant qu'on intérroge tous nos propres stétéreotypes dans ce discord... La frontiére de nos stéréotype est a mon avis beaucoup plus fluide que ce que l'on peut penser... ");}
   if (~msg.indexOf("omg")) {return message.channel.send({file :"./media/omg.png"});}
@@ -37,7 +36,7 @@ module.exports = (client, message) => {
   if (!cmd) return;
 
   if (cmd && !message.guild && cmd.conf.guildOnly)
-    return message.channel.send("Cette commande ne marche pas MP. Go sur le Text channel de TheHut bae.");
+    return message.channel.send("Cette commande ne marche pas en MP. Go sur le Text channel de TheHut bae.");
 
   if (client.settings.get(message.guild.id).systemNotice === "true") {
     if (level < client.levelCache[cmd.conf.permLevel])
