@@ -14,7 +14,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     .then(connection => {
       const stream = yt(String(args), {audioonly: true});
       const dispatcher = connection.playStream(stream);
-    });
+    })).catch(err => console.log(err));
 };
 
 exports.conf = {
