@@ -21,7 +21,8 @@ module.exports = (client, message) => {
   if (~msg.indexOf("xd") ||~msg.indexOf("lol") || ~msg.indexOf("mdr")) {return message.channel.send("JMDR TRO LOL XPTDR :joy:");}
   if (~msg.indexOf("bot")) {return message.channel.send("Ah bon!? Seulement sur la base de mon apparence vous jugez que je suis un bot...? c'est intérressant qu'on intérroge tous nos propres stétéreotypes dans ce discord... La frontiére de nos stéréotype est a mon avis beaucoup plus fluide que ce que l'on peut penser... ");}
   if (~msg.indexOf("omg")) {return message.channel.send({file :"./media/omg.png"});}
-  if (~msg.indexOf("blanc") | ~msg.indexOf("homme")) {return message.channel.send({file :"./media/halflibanais.jpg"});}
+  if (~msg.indexOf("blanc") | ~msg.indexOf("homme")| ~msg.indexOf("libanais")) {return message.channel.send({file :"./media/halflibanais.png"});}
+
 
 
   if (message.content.indexOf(settings.prefix) !== 0) return;
