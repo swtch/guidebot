@@ -18,10 +18,12 @@ module.exports = (client, message) => {
   const msg = message.content.toLowerCase().split(" ");
 
 
-  if (~msg.indexOf("xd") ||~msg.indexOf("lol") || ~msg.indexOf("mdr")) {return message.channel.send("JMDR TRO LOL XPTDR :joy:");}
+ 
   if (~msg.indexOf("bot")) {return message.channel.send("Ah bon!? Seulement sur la base de mon apparence vous jugez que je suis un bot...? c'est intérressant qu'on intérroge tous nos propres stétéreotypes dans ce discord... La frontiére de nos stéréotype est a mon avis beaucoup plus fluide que ce que l'on peut penser... ");}
   if (~msg.indexOf("omg")) {return message.channel.send({file :"./media/omg.png"});}
-  if (~msg.indexOf("blanc") | ~msg.indexOf("homme")| ~msg.indexOf("libanais")) {return message.channel.send({file :"./media/halflibanais.png"});}
+  if (~msg.indexOf("blanc") || ~msg.indexOf("homme")|| ~msg.indexOf("libanais")) {return message.channel.send({file :"./media/halflibanais.png"});}
+  if (~msg.indexOf("FUCK YEEEAH")) {return message.channel.send("Coming again, to save the mother fucking day yeah!");}
+  if (~msg.indexOf("cod") || ~msg.indexOf("COD")|| ~msg.indexOf("CoD")|| ~msg.indexOf("call of duty")) {return message.channel.send("PTDR :joy: T Ki? d'ou tu parles de ce jeu du sheitan");}
 
 
 
